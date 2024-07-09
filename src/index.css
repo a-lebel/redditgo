@@ -90,6 +90,7 @@ input {
   flex-grow: 1;
   width: 400px;
   background-color: #ffffff;
+  box-shadow: 2px 2px 6px #EDEDED;
 }
 
 .side-menu h2 {
@@ -133,6 +134,7 @@ input {
   width: 600px;
   background-color: #ffffff;
   flex-shrink: 0;
+  box-shadow: 2px 2px 6px #EDEDED;
 }
 
 .post h3 {
@@ -150,9 +152,15 @@ input {
   text-decoration: none;
 }
 
-.post-image {
-  width: 100%;
+.post img {
+  /* Ensure images resize appropriately */
+  max-width: 100%;
   height: auto;
+  /* Maintain aspect ratio */
   display: block;
-  margin: 20px 0;
+  margin: 0 auto; /* Center images */
+}
+
+.author {
+  font-weight: 800;
 }

@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../features/posts/postsSlice';
+import { fetchPopularPosts } from '../features/posts/postsSlice';
 
 const SideMenu = () => {
   const dispatch = useDispatch();
   const subreddits = useSelector(state => state.subreddits.subreddits);
 
   const handleSubredditClick = (subreddit) => {
-    dispatch(fetchPosts(subreddit));
+    dispatch(fetchPopularPosts(subreddit.name)); // Dispatch with subreddit name
   };
 
   return (
@@ -15,7 +15,7 @@ const SideMenu = () => {
       <h2>Popular Subreddits</h2>
       <ul>
         {subreddits.map(subreddit => (
-          <li key={subreddit.name} onClick={() => handleSubredditClick(subreddit.name)}>
+          <li key={subreddit.name} onClick={() => handleSubredditClick(subreddit)}>
             <img src={subreddit.thumbnail} alt={subreddit.name} className="subreddit-thumbnail" />
             {subreddit.name}
           </li>

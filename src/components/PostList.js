@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPopularPosts, selectPosts } from '../features/posts/postsSlice';
+import { fetchPopularPosts, selectPosts, fetchPosts } from '../features/posts/postsSlice';
 import Post from './Post';
 import SearchBar from './SearchBar';
+
+
 
 const PostList = () => {
   const dispatch = useDispatch();
@@ -34,13 +36,9 @@ const PostList = () => {
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
-      {filteredPosts.length === 0 ? (
-        <p>No results found</p>
-      ) : (
-        filteredPosts.map(post => (
-          <Post key={post.id} post={post} />
-        ))
-      )}
+      {filteredPosts.map(post => (
+        <Post key={post.id} post={post} />
+      ))}
     </div>
   );
 };
