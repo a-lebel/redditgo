@@ -1,30 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../features/posts/postsSlice';
+import { fetchPopularPosts, selectPosts } from '../features/posts/postsSlice';
 import Post from './Post';
+import SearchBar from './SearchBar';
 
 const PostList = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.posts.posts);
+  const posts = useSelector(selectPosts);
   const status = useSelector(state => state.posts.status);
+  const error = useSelector(state => state.posts.error);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    dispatch(fetchPosts('javascript'));
+    dispatch(fetchPopularPosts());
   }, [dispatch]);
+
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+  };
+
+  const filteredPosts = posts.filter(post =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
   if (status === 'failed') {
-    return <div>Error loading posts.</div>;
+    return <div>Error loading posts: {error}</div>;
   }
 
   return (
     <div>
-      {posts.map(post => (
-        <Post key={post.id} post={post} />
-      ))}
+      <SearchBar onSearch={handleSearch} />
+      {filteredPosts.length === 0 ? (
+        <p>No results found</p>
+      ) : (
+        filteredPosts.map(post => (
+          <Post key={post.id} post={post} />
+        ))
+      )}
     </div>
   );
 };
